@@ -14,13 +14,14 @@
             <apex:pageBlockSection columns="1">
                 <!--ここにタイムラインを表示-->
                 <apex:pageBlockTable value="{! tweets }" var="tw">
-                    <apex:column value="{! tw.title__c }"/>
-                        <!-- <apex:outputLink value="{!URLFOR('/'+ tw.Id)">tw.title__c</apex:outputLink> 
-                    </apex:column>  -->
+                    <apex:column>
+                        <apex:outputLink value="./SNS_Tweet?id={!tw.id}"><apex:outputField value="{!tw.title__c}"/></apex:outputLink> 
+                    </apex:column> 
                     <apex:column value="{! tw.body__c }"/>
                     <!-- <apex:column value="{! tw.like_num }"/> -->
                     <apex:column value="{! tw.CreatedById }"/>
                     <apex:column value="{! tw.CreatedDate }"/>
+                    <apex:column value="{! tw.id }"/>
                 </apex:pageBlockTable>
 
             </apex:pageBlockSection>

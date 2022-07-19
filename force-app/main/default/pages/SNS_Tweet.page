@@ -1,6 +1,32 @@
-<apex:page>
-<!-- Begin Default Content REMOVE THIS -->
-<h1>Hello World</h1>
-<p>This is Tweetpage.</p>
-<!-- End Default Content REMOVE THIS -->
+<apex:page StandardController="Tweet__c" >
+    
+    <apex:form>
+        
+        <apex:pageBlock title = "Tweet">
+            
+            <apex:pageBlockButtons>
+                <!-- ここにツールバーを入れる 追加だよ-->
+                <apex:commandButton value="Home" action="{!URLFOR($Page.SNS_Home)}" />
+                <apex:commandButton value="Myage" action="{!URLFOR($Page.SNS_User)}" />
+                <apex:commandButton value="Newpost" action="{!URLFOR($Page.SNS_Post)}" />
+            </apex:pageBlockButtons>
+    
+            <apex:pageBlockSection columns="1">
+                <!--ここにタイムラインを表示-->
+                <apex:outputText value="{! Tweet__c.CreatedById }"/>
+                <apex:outputText value="{! Tweet__c.CreatedDate }"/>
+                <apex:outputText value="{! Tweet__c.title__c }"/>
+                <apex:outputText value="{! Tweet__c.body__c }"/> 
+            </apex:pageBlockSection>
+
+            <apex:pageBlockSection columns="2">
+                <apex:outputText value="{! Tweet__c.commented_id__c }"/>
+            </apex:pageBlockSection>
+
+           
+        
+        </apex:pageBlock>
+            
+    </apex:form>
+
 </apex:page>

@@ -1,8 +1,9 @@
+
 <apex:page StandardController="Tweet__c" extensions="TweetExtension">
     <apex:form>
         <apex:pageBlock title = "Post Page" mode="edit">
             <apex:pageBlockButtons>
-                <!-- ここにツールバーを入れる-->
+                <!-- ここにツールバーを入れる　-->
                 <apex:commandButton value="Home" action="{!URLFOR($Page.SNS_Home)}" />
                 <apex:commandButton value="Myage" action="{!URLFOR($Page.SNS_User)}" />
                 <apex:commandButton value="Newpost" action="{!URLFOR($Page.SNS_Post)}" />
