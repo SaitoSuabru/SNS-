@@ -5,7 +5,7 @@
         <apex:pageBlock title = "Home">
             
             <apex:pageBlockButtons>
-                <!-- ここにツールバーを入れる-->
+                <!-- ここにツールバーを入れる 追加だよ-->
                 <apex:commandButton value="Home" action="{!URLFOR($Page.SNS_Home)}" />
                 <apex:commandButton value="Myage" action="{!URLFOR($Page.SNS_User)}" />
                 <apex:commandButton value="Newpost" action="{!URLFOR($Page.SNS_Post)}" />
@@ -14,9 +14,9 @@
             <apex:pageBlockSection columns="1">
                 <!--ここにタイムラインを表示-->
                 <apex:pageBlockTable value="{! tweets }" var="tw">
-                    <apex:column value="{! tw.title__c }">
-                        <!-- <apex:outputLink value="{!URLFOR('/'+ tw.Id)">tw.title__c</apex:outputLink> -->
-                    <!-- </apex:column> -->
+                    <apex:column value="{! tw.title__c }"/>
+                        <!-- <apex:outputLink value="{!URLFOR('/'+ tw.Id)">tw.title__c</apex:outputLink> 
+                    </apex:column>  -->
                     <apex:column value="{! tw.body__c }"/>
                     <!-- <apex:column value="{! tw.like_num }"/> -->
                     <apex:column value="{! tw.CreatedById }"/>
