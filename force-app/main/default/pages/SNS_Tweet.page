@@ -23,9 +23,8 @@
                 <apex:outputText value="{! Tweet__c.commented_id__c }"/>
             </apex:pageBlockSection>
 
-           
-        
         </apex:pageBlock>
+        
             
     </apex:form>
 
