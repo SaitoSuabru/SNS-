@@ -24,7 +24,7 @@
         </apex:pageBlock>
 
         <apex:pageBlock title="Comments" id="comment_list">
-            <apex:pageBlockTable value="{! TweetExtension.childrenTweets}" var="comment">
+            <apex:pageBlockTable value="{! }" var="comment">
                 <apex:column value="{! comment.title__c}"/>
 
 
