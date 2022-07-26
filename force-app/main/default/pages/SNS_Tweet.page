@@ -6,13 +6,14 @@
             <apex:pageBlockButtons>
                 <!-- ここにツールバーを入れる 追加だよ-->
                 <apex:commandButton value="Home" action="{!URLFOR($Page.SNS_Home)}" />
-                <apex:commandButton value="Myage" action="{!URLFOR($Page.SNS_User)}" />
+                <apex:commandButton value="Mypage" action="{!URLFOR($Page.SNS_User)}?id={! $User.Id}"/>
                 <apex:commandButton value="Newpost" action="{!URLFOR($Page.SNS_Post)}" />
             </apex:pageBlockButtons>
 
             
             <apex:pageBlockSection columns="1">
                 <!--ここにタイムラインを表示-->
+                
                 <apex:outputText value="{! Tweet__c.CreatedBy.Name }"/>
                 <apex:outputText value="{! Tweet__c.CreatedDate }"/>
                 <apex:outputText value="{! Tweet__c.title__c }"/>
@@ -35,7 +36,9 @@
 
         <apex:pageBlock title="Comments" id="comment_list">
             <apex:pageBlockTable value="{! childrenTweets }" var="comment">
-                <apex:column value="{! comment.body__c}"/>
+                <apex:column>
+                    <apex:outputLink value="./SNS_Tweet?id={!comment.id}"><apex:outputField value="{!comment.body__c}"/></apex:outputLink> 
+                </apex:column>
                 <apex:column value="{! comment.CreatedById}"/>
                 <apex:column value="{! comment.CreatedDate}"/>
             </apex:pageBlockTable>

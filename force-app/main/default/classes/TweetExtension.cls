@@ -9,12 +9,23 @@ public class TweetExtension {
 
     public List<Tweet__c> getchildrenTweets() {
         List<Tweet__c> results = Database.query(
-            'SELECT body__c, CreatedById, CreatedDate ' +
+            'SELECT Id, body__c, CreatedById, CreatedDate ' +
             'FROM Tweet__c ' +
             'WHERE commented_id__c = \'' + this.stdController.getRecord().Id +'\''
         );
         return results;
     }
+
+
+    public List<Tweet__c> getMyTweets() {
+        List<Tweet__c> results = Database.query(
+            'SELECT title__c, body__c, CreatedById, CreatedDate ' +
+            'FROM Tweet__c ' +
+            'WHERE CreatedById = \'' + this.stdController.getRecord().Id +'\''
+        );
+        return results;
+    }
+
 
 
 

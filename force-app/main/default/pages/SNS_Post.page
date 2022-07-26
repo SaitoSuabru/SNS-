@@ -5,7 +5,7 @@
             <apex:pageBlockButtons>
                 <!-- ここにツールバーを入れる　-->
                 <apex:commandButton value="Home" action="{!URLFOR($Page.SNS_Home)}" />
-                <apex:commandButton value="Myage" action="{!URLFOR($Page.SNS_User)}" />
+                <apex:commandButton value="Mypage" action="{!URLFOR($Page.SNS_User)}?id={! $User.Id}"/>
                 <apex:commandButton value="Newpost" action="{!URLFOR($Page.SNS_Post)}" />
             </apex:pageBlockButtons>
 

@@ -1,4 +1,32 @@
-<apex:page >
-    <h1>Hello World</h1>
-    <p>This is Userpage.</p>
+<apex:page standardController="User" extensions="TweetExtension">
+    <apex:form>
+        <apex:pageBlock title = "Mypage" id = "users_list">
+            <apex:pageBlockButtons>
+                <!-- ここにツールバーを入れる 追加だよ-->
+                <apex:commandButton value="Home" action="{!URLFOR($Page.SNS_Home)}" />
+                <apex:commandButton value="Mypage" action="{!URLFOR($Page.SNS_User)}?id={! $User.Id}"/>
+                <apex:commandButton value="Newpost" action="{!URLFOR($Page.SNS_Post)}" />
+            </apex:pageBlockButtons>
+        </apex:pageBlock>
+
+        <apex:pageBlock>
+            <apex:pageBlockSection>
+                <apex:outputText value="{! $User.FirstName}"/>
+                <apex:outputText value="{! $User.Id}"/>
+
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+
+        <apex:pageBlock title="MyTweet" id="mytweet_list">
+            <apex:pageBlockTable value="{! MyTweets }" var="mt">
+                <apex:column>
+                    <apex:outputLink value="./SNS_Tweet?id={!mt.id}"><apex:outputField value="{!mt.title__c}"/></apex:outputLink> 
+                </apex:column>
+                <apex:column value="{! mt.body__c}"/>
+                <apex:column value="{! mt.CreatedById}"/>
+                <apex:column value="{! mt.CreatedDate}"/>
+            </apex:pageBlockTable>
+        </apex:pageBlock>   
+
+    </apex:form>
 </apex:page>
