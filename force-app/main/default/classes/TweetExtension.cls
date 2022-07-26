@@ -49,6 +49,14 @@ public class TweetExtension {
         private set;
     }
 
+    public List<User> getUsers(){
+        List<User> result = Database.query(
+            'SELECT Id, Name,'  +
+            'FROM User '
+        );
+        return result;
+    }
+
 
 
 

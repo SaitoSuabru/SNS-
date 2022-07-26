@@ -1,8 +1,7 @@
-<apex:page StandardController="Tweet__c" >
-    
+<apex:page StandardController="Tweet__c" extensions="TweetExtension" >
     <apex:form>
         
-        <apex:pageBlock title = "Tweet">
+        <apex:pageBlock title = "Tweet" id = "users_list">
             
             <apex:pageBlockButtons>
                 <!-- ここにツールバーを入れる 追加だよ-->
@@ -16,16 +15,20 @@
                 <apex:outputText value="{! Tweet__c.CreatedById }"/>
                 <apex:outputText value="{! Tweet__c.CreatedDate }"/>
                 <apex:outputText value="{! Tweet__c.title__c }"/>
-                <apex:outputText value="{! Tweet__c.body__c }"/> 
-            </apex:pageBlockSection>
-
-            <apex:pageBlockSection columns="2">
-                <apex:outputText value="{! Tweet__c.commented_id__c }"/>
+                <apex:outputText value="{! Tweet__c.body__c }"/>
+                <apex:outputText value="{! Tweet__c.commented_id__c"/> 
             </apex:pageBlockSection>
 
         </apex:pageBlock>
+<!-- 
+        <apex:pageBlock title="Comment">
+            <apex:pageBlockTable value="{! Tweet__c.commented_id__c}" var="comment">
+                <apex:column value="{!comment.title__c}"/>
+            </apex:pageBlockTable>
+        </apex:pageBlock>   -->
         
             
     </apex:form>
 
 </apex:page>
+

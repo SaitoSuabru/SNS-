@@ -21,7 +21,6 @@
                     <!-- <apex:column value="{! tw.like_num }"/> -->
                     <apex:column value="{! tw.CreatedById }"/>
                     <apex:column value="{! tw.CreatedDate }"/>
-                    <apex:column value="{! tw.id }"/>
                 </apex:pageBlockTable>
 
             </apex:pageBlockSection>
