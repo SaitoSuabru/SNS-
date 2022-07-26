@@ -16,7 +16,6 @@
                 <apex:outputText value="{! Tweet__c.CreatedDate }"/>
                 <apex:outputText value="{! Tweet__c.title__c }"/>
                 <apex:outputText value="{! Tweet__c.body__c }"/>
-               <apex:outputText value="{! Tweet__c.commented_id__c"/> 
             </apex:pageBlockSection>
 
         </apex:pageBlock>
