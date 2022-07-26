@@ -9,24 +9,36 @@
                 <apex:commandButton value="Myage" action="{!URLFOR($Page.SNS_User)}" />
                 <apex:commandButton value="Newpost" action="{!URLFOR($Page.SNS_Post)}" />
             </apex:pageBlockButtons>
-    
+
+            
             <apex:pageBlockSection columns="1">
                 <!--ここにタイムラインを表示-->
-                <apex:outputText value="{! Tweet__c.CreatedById }"/>
+                <apex:outputText value="{! Tweet__c.CreatedBy.Name }"/>
                 <apex:outputText value="{! Tweet__c.CreatedDate }"/>
                 <apex:outputText value="{! Tweet__c.title__c }"/>
                 <apex:outputText value="{! Tweet__c.body__c }"/>
+                <apex:outputText value="{! Tweet__c.commented_id__c}"/>
+
             </apex:pageBlockSection>
 
         </apex:pageBlock>
-<!-- 
-        <apex:pageBlock title="Comment">
-            <apex:pageBlockTable value="{! Tweet__c.commented_id__c}" var="comment">
-                <apex:column value="{!comment.title__c}"/>
+
+        <apex:pageBlock title="Comments" id="comment_list">
+            <apex:pageBlockTable value="{! TweetExtension.childrenTweets}" var="comment">
+                <apex:column value="{! comment.title__c}"/>
+
+
             </apex:pageBlockTable>
-        </apex:pageBlock>   -->
-        
-            
+
+        </apex:pageBlock>
+
+<!-- 
+        <apex:pageBlock title="Comments" id="comment_list">
+            <apex:pageBlockTable value="{! childrenTweets }" var="comment">
+                <apex:column value="{! comment.title__c}"/>
+            </apex:pageBlockTable>
+        </apex:pageBlock>  -->
+
     </apex:form>
 
 </apex:page>
