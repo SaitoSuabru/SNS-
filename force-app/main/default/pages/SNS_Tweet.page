@@ -17,27 +17,29 @@
                 <apex:outputText value="{! Tweet__c.CreatedDate }"/>
                 <apex:outputText value="{! Tweet__c.title__c }"/>
                 <apex:outputText value="{! Tweet__c.body__c }"/>
-                <apex:outputText value="{! Tweet__c.commented_id__c}"/>
+    
 
             </apex:pageBlockSection>
 
         </apex:pageBlock>
-
-        <apex:pageBlock title="Comments" id="comment_list">
-            <apex:pageBlockTable value="{! }" var="comment">
-                <apex:column value="{! comment.title__c}"/>
-
-
-            </apex:pageBlockTable>
-
-        </apex:pageBlock>
-
 <!-- 
         <apex:pageBlock title="Comments" id="comment_list">
-            <apex:pageBlockTable value="{! childrenTweets }" var="comment">
+            <apex:pageBlockTable value="{! childrenTweets}" var="comment">
                 <apex:column value="{! comment.title__c}"/>
+
+
             </apex:pageBlockTable>
-        </apex:pageBlock>  -->
+
+        </apex:pageBlock> -->
+
+
+        <apex:pageBlock title="Comments" id="comment_list">
+            <apex:pageBlockTable value="{! childrenTweets }" var="comment">
+                <apex:column value="{! comment.body__c}"/>
+                <apex:column value="{! comment.CreatedById}"/>
+                <apex:column value="{! comment.CreatedDate}"/>
+            </apex:pageBlockTable>
+        </apex:pageBlock>  
 
     </apex:form>
 

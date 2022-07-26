@@ -1,20 +1,20 @@
 public class TweetExtension {
 
     private ApexPages.StandardController stdController;
-    public List<Tweet__c> childrenTweets = new List<Tweet__c>();
+    // public List<Tweet__c> childrenTweets = new List<Tweet__c>();
     public TweetExtension (ApexPages.StandardController ct) {
         this.stdController = ct;
-        childrenTweets = [SELECT Id FROM Tweet__c WHERE commented_id__c = :ct.getRecord().Id];
+        // childrenTweets = [SELECT Id FROM Tweet__c WHERE commented_id__c = :ct.getRecord().Id];
     }
 
-    // public List<Tweet__c> getchildrenTweets() {
-    //     List<Tweet__c> results = Database.query(
-    //         'SELECT Id' +
-    //         'FROM Tweet__c ' +
-    //         'WHERE commented_id__c = ' + this.stdController.getRecord().Id
-    //     );
-    //     return results;
-    // }
+    public List<Tweet__c> getchildrenTweets() {
+        List<Tweet__c> results = Database.query(
+            'SELECT body__c, CreatedById, CreatedDate ' +
+            'FROM Tweet__c ' +
+            'WHERE commented_id__c = \'' + this.stdController.getRecord().Id +'\''
+        );
+        return results;
+    }
 
 
 
