@@ -23,6 +23,7 @@
                     <apex:outputLink value="./SNS_Tweet?id={!mt.id}"><apex:outputField value="{!mt.title__c}"/></apex:outputLink> 
                 </apex:column>
                 <apex:column value="{! mt.body__c}"/>
+                <apex:outputText value="{! mt.like_num__c}"/>
                 <apex:column value="{! mt.CreatedById}"/>
                 <apex:column value="{! mt.CreatedDate}"/>
             </apex:pageBlockTable>
