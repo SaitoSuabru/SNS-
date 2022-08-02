@@ -1,10 +1,13 @@
 public class TweetExtension {
 
+    public String msg{get; set;}
+
     private ApexPages.StandardController stdController;
     // public List<Tweet__c> childrenTweets = new List<Tweet__c>();
     public TweetExtension (ApexPages.StandardController ct) {
         this.stdController = ct;
         // childrenTweets = [SELECT Id FROM Tweet__c WHERE commented_id__c = :ct.getRecord().Id];
+        this.msg='表示できた！';
     }
 
     public List<Tweet__c> getchildrenTweets() {
@@ -24,6 +27,11 @@ public class TweetExtension {
             'WHERE CreatedById = \'' + this.stdController.getRecord().Id +'\''
         );
         return results;
+    }
+
+
+    public void comment_button(){
+        this.msg = 'action実行したよ!';
     }
 
 

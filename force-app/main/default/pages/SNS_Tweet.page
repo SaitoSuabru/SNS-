@@ -1,4 +1,5 @@
 <apex:page StandardController="Tweet__c" extensions="TweetExtension" >
+    
     <apex:form>
         
         <apex:pageBlock title = "Tweet" id = "users_list">
@@ -43,6 +44,14 @@
                 <apex:column value="{! comment.CreatedDate}"/>
             </apex:pageBlockTable>
         </apex:pageBlock>  
+
+        <apex:commandButton value="comment" action="{! comment_button}" oncomplete="afterAction();" reRender="frm"/>
+        
+        <!-- <script type="text/javascript">
+            function afterAction(){
+                alert('{! msg}');
+            }
+        </script> -->
 
     </apex:form>
 
