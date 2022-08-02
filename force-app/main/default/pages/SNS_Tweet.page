@@ -95,7 +95,7 @@
         </script> 
          -->
 
-        <button id="myBtn">Open Modal</button>
+        <button type="button" id="myBtn">Open Modal</button>
 
         <!-- The Modal -->
         <div id="myModal" class="modal">
