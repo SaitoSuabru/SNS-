@@ -1,20 +1,22 @@
 public class TweetExtension {
 
     public String msg{get; set;}
-
+    public Tweet__c sub_comment {get;set;}
     private ApexPages.StandardController stdController;
     // public List<Tweet__c> childrenTweets = new List<Tweet__c>();
     public TweetExtension (ApexPages.StandardController ct) {
         this.stdController = ct;
         // childrenTweets = [SELECT Id FROM Tweet__c WHERE commented_id__c = :ct.getRecord().Id];
         this.msg='表示できた！';
+        sub_comment = new Tweet__c();
     }
 
     public List<Tweet__c> getchildrenTweets() {
         List<Tweet__c> results = Database.query(
             'SELECT Id, body__c, CreatedById, CreatedDate ' +
             'FROM Tweet__c ' +
-            'WHERE commented_id__c = \'' + this.stdController.getRecord().Id +'\''
+            'WHERE commented_id__c = \'' + this.stdController.getRecord().Id +'\' '
+            + 'ORDER BY CreatedDate ASC' 
         );
         return results;
     }
@@ -60,6 +62,23 @@ public class TweetExtension {
        }
 
     }
+
+
+
+
+    public void comment(){
+        String tweet_id = this.stdController.getRecord().Id;
+
+        Tweet__c comment = new Tweet__c(
+            commented_id__c = tweet_id,
+            title__c = null
+        );
+        comment.body__c = sub_comment.body__c;
+        insert comment;
+        sub_comment = new Tweet__c();
+
+    }
+
     
     public List<String> accessibleFields {
         get {
