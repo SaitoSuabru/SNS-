@@ -2,6 +2,7 @@ public class TweetExtension {
 
     public String msg{get; set;}
     public Tweet__c sub_comment {get;set;}
+    public Tweet__c acct;
     private ApexPages.StandardController stdController;
     // public List<Tweet__c> childrenTweets = new List<Tweet__c>();
     public TweetExtension (ApexPages.StandardController ct) {
@@ -9,6 +10,7 @@ public class TweetExtension {
         // childrenTweets = [SELECT Id FROM Tweet__c WHERE commented_id__c = :ct.getRecord().Id];
         this.msg='表示できた！';
         sub_comment = new Tweet__c();
+        this.acct =(Tweet__c)stdController.getRecord();
     }
 
     public List<Tweet__c> getchildrenTweets() {
@@ -77,6 +79,12 @@ public class TweetExtension {
         insert comment;
         sub_comment = new Tweet__c();
 
+    }
+
+    public void good(){
+        Decimal good_num = acct.like_num__c;
+        good_num += 1;
+        acct.like_num__c = good_num;
     }
 
     

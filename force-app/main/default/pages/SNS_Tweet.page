@@ -64,6 +64,10 @@
     
 
             </apex:pageBlockSection>
+            
+            <apex:pageBlockButtons>
+                    <apex:commandButton action="{! good }" value="Good"/>
+            </apex:pageBlockButtons>
 
         </apex:pageBlock>
 <!-- 
