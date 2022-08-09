@@ -13,6 +13,7 @@ public class TweetExtension {
         this.acct =(Tweet__c)stdController.getRecord();
     }
 
+    // コメントをリストに格納
     public List<Tweet__c> getchildrenTweets() {
         List<Tweet__c> results = Database.query(
             'SELECT Id, body__c, CreatedById, CreatedDate ' +
@@ -23,7 +24,7 @@ public class TweetExtension {
         return results;
     }
 
-
+    // 自分のツイートを取得（SNS_Userで利用）
     public List<Tweet__c> getMyTweets() {
         List<Tweet__c> results = Database.query(
             'SELECT title__c, body__c, CreatedById, CreatedDate ' +
@@ -34,22 +35,7 @@ public class TweetExtension {
     }
 
 
-    public void comment_button(){
-        this.msg = 'action実行したよ!';
-    }
-
-
-
-
-
-    // public String getUserName(){
-    //     String result = Database.query(
-    //         'SELECT Name' +
-    //         'FROM Tweet__c'
-    //     );
-    //     return result;
-    // }
-
+    // ツイートの新規作成＆更新（SNS_Postで利用）
     public void save(){
         System.debug(this.stdController.getRecord());
 
@@ -66,8 +52,7 @@ public class TweetExtension {
     }
 
 
-
-
+    // ツイートに対するコメントをする（SNS_Tweetで利用）
     public void comment(){
         String tweet_id = this.stdController.getRecord().Id;
 
@@ -81,11 +66,23 @@ public class TweetExtension {
 
     }
 
+    // いいねボタンと連動してGoodレコードを作り、triggerに反応する場所
     public void good(){
-        Decimal good_num = acct.like_num__c;
-        good_num += 1;
-        acct.like_num__c = good_num;
+        String tweet_id = this.stdController.getRecord().Id;
+
+        Good__c good = new Good__c(
+            good_tweet_id__c = tweet_id
+        );
+        insert good;
     }
+
+
+    // // いいね数を実際にプラスする関数
+    // public void good_cal(){ 
+    //     Decimal good_num = acct.like_num__c;
+    //     good_num += 1;
+    //     acct.like_num__c = good_num;
+    // }
 
     
     public List<String> accessibleFields {
@@ -114,15 +111,6 @@ public class TweetExtension {
         }
         private set;
     }
-
-    public List<User> getUsers(){
-        List<User> result = Database.query(
-            'SELECT Id, Name,'  +
-            'FROM User '
-        );
-        return result;
-    }
-
 
 
 
