@@ -15,6 +15,11 @@
                 <apex:outputText value="{! $User.Id}"/>
 
             </apex:pageBlockSection>
+
+            <apex:pageBlockButtons>
+                <apex:commandButton action="{! follow }" value="Follow"/>
+            </apex:pageBlockButtons>
+
         </apex:pageBlock>
 
         <apex:pageBlock title="MyTweet" id="mytweet_list">

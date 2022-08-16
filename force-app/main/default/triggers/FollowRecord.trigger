@@ -1,5 +1,9 @@
 trigger FollowRecord on Follows__c (before insert) {
-    Follows__c[] follow = Trigger.new;
+    Set<Id> followIds = new Set<Id>();
+    
+    for(Follows__c a : Trigger.New){
+        followIds.add(a.follower_id__c);
+    }
 
 
 
