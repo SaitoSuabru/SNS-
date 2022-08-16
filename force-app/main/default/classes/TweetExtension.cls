@@ -67,13 +67,16 @@ public class TweetExtension {
     }
 
     // いいねボタンと連動してGoodレコードを作り、triggerに反応する場所
-    public void good(){
+    public PageReference good(){
         String tweet_id = this.stdController.getRecord().Id;
 
         Good__c good = new Good__c(
             good_tweet_id__c = tweet_id
         );
         insert good;
+        PageReference tempPages = new PageReference('/apex/SNS_Tweet?id='+tweet_id);
+        tempPages.setRedirect(true);
+        return tempPages;
     }
 
 

@@ -53,7 +53,7 @@
             </apex:pageBlockButtons>
 
             
-            <apex:pageBlockSection columns="1">
+            <apex:pageBlockSection columns="1" id="PageBlockSection">
                 <!--ここにタイムラインを表示-->
                 
                 <apex:outputText value="{! Tweet__c.CreatedBy.Name }"/>
@@ -61,12 +61,11 @@
                 <apex:outputText value="{! Tweet__c.title__c }"/>
                 <apex:outputText value="{! Tweet__c.body__c }"/>
                 <apex:outputText value="{! Tweet__c.like_num__c}"/>
-    
 
             </apex:pageBlockSection>
             
             <apex:pageBlockButtons>
-                    <apex:commandButton action="{! good }" value="Good"/>
+                    <apex:commandButton action="{! good }" reRender="PageBlockSection" value="Good"/>
             </apex:pageBlockButtons>
 
         </apex:pageBlock>
