@@ -1,4 +1,4 @@
-<apex:page standardController="User" extensions="TweetExtension">
+<apex:page standardController="User" extensions="FollowExtension">
     <apex:form>
         <apex:pageBlock title = "Mypage" id = "users_list">
             <apex:pageBlockButtons>
