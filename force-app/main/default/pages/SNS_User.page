@@ -1,4 +1,48 @@
 <apex:page standardController="User" extensions="FollowExtension">
+    <apex:includeScript value="{! $Resource.jQuery }"/>
+    <style>
+        body {font-family: Arial, Helvetica, sans-serif;}
+        
+        /* The Modal (background) */
+        .followmodal {
+          display: none; /* Hidden by default */
+          position: fixed; /* Stay in place */
+          z-index: 1; /* Sit on top */
+          padding-top: 100px; /* Location of the box */
+          left: 0;
+          top: 0;
+          width: 100%; /* Full width */
+          height: 100%; /* Full height */
+          overflow: auto; /* Enable scroll if needed */
+          background-color: rgb(0,0,0); /* Fallback color */
+          background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        }
+        
+        /* Modal Content */
+        .followmodal_content {
+          background-color: #fefefe;
+          margin: auto;
+          padding: 20px;
+          border: 1px solid #888;
+          width: 80%;
+        }
+        
+        /* The Close Button */
+        .close {
+          color: #aaaaaa;
+          float: right;
+          font-size: 28px;
+          font-weight: bold;
+        }
+        
+        .close:hover,
+        .close:focus {
+          color: #000;
+          text-decoration: none;
+          cursor: pointer;
+        }
+        </style>
+
     <apex:form>
         <apex:pageBlock title = "Mypage" id = "users_list">
             <apex:pageBlockButtons>
@@ -7,19 +51,126 @@
                 <apex:commandButton value="Mypage" action="{!URLFOR($Page.SNS_User)}?id={! $User.Id}"/>
                 <apex:commandButton value="Newpost" action="{!URLFOR($Page.SNS_Post)}" />
             </apex:pageBlockButtons>
-        </apex:pageBlock>
 
-        <apex:pageBlock>
             <apex:pageBlockSection>
-                <apex:outputText value="{! $User.FirstName}"/>
-                <apex:outputText value="{! $User.Id}"/>
+                <apex:outputText value="{! User.FirstName}"/>
+                <apex:outputText value="{! User.Id}"/>
 
             </apex:pageBlockSection>
 
-            <apex:pageBlockButtons>
-                <apex:commandButton action="{! follow }" value="Follow"/>
+            <apex:pageBlockButtons rendered="{! owner_bool}">
+                <apex:commandButton action="{! follow }" value="Follow" rendered="{! follow_bool}"/>
+                <apex:commandButton action="{! follow }" value="UnFollow" rendered="{! NOT(follow_bool)}"/>                
+            </apex:pageBlockButtons>
+            <apex:pageBlockButtons rendered="{! NOT(owner_bool)}">
+                <apex:commandButton value="edit"/>
             </apex:pageBlockButtons>
 
+            <apex:pageBlockSection>
+                <apex:outputText value="Follow  {! follow_num}"/>
+                <apex:outputText value="Follower  {! follower_num}"/>
+            </apex:pageBlockSection>
+
+
+            <button type="button" id="followbtn" onclick="button1click();">Follow User</button>
+
+            <div id="FollowModal" class="followmodal">
+                <div class="followmodal_content">
+                    <apex:pageBlock>
+                        <apex:pageBlockTable value="{! FollowUser}" var="fs">
+                            <apex:column value="{! fs.follower_id__c}"/>
+                            <apex:column value="{! fs.name}"/>
+                        </apex:pageBlockTable>
+                        <span class="close">&times;</span>
+                    </apex:pageBlock>
+                </div>
+            </div>
+
+            <script>
+                // var modal = document.getElementById("FollowModal");
+                // var btn = document.getElementById("followbtn");
+                // var span = $('#FollowModal span.close')[0];
+                // btn.onclick = function(){
+                //     modal.style.display = "block";
+                // }
+                // span.onclick = function(){
+                //     modal.style.display = "none";
+                // }
+                // window.onclick = function(event){
+                //     if (event.target == modal) {
+                //         modal.style.display = "none";
+                //     }   
+                // }
+            </script>
+
+            
+            <button type="button" id="followerbtn" onclick="button2click();">Follower User</button>
+
+            <div id="FollowerModal" class="followmodal">
+                <div class="followmodal_content">
+                    <apex:pageBlock>
+                        <apex:pageBlockTable value="{! FollowerUser}" var="fws">
+                            <apex:column value="{! fws.CreatedById}"/>
+                        </apex:pageBlockTable>
+                        <span class="close">&times;</span>
+                    </apex:pageBlock>
+                </div>
+            </div>
+
+            <script>
+                function button1click(){
+                    var modal = document.getElementById("FollowModal");
+                    var span = $('#FollowModal span.close')[0];                
+                     
+                    modal.style.display = "block";
+                    // span.onclick = function(){
+                    //     modal.style.display = "none";
+                    // }
+                    span.addEventListener('click', function(){
+                        modal.style.display = 'none';
+                    })
+                    window.onclick = function(event){
+                        if (event.target == modal) {
+                            modal.style.display = "none";
+                        }   
+                    }
+                }
+                function button2click(){
+                    var modal = document.getElementById("FollowerModal");
+                    var span = $('#FollowerModal span.close')[0];                
+                    modal.style.display = "block";
+                    // span.onclick = function(){
+                    //     modal.style.display = "none";
+                    // }
+                    span.addEventListener('click', function(){
+                        modal.style.display = 'none';
+                    })
+                    window.onclick = function(event){
+                        if (event.target == modal) {
+                            modal.style.display = "none";
+                        }   
+                    }
+                }
+                // var modal = document.getElementById("FollowerModal");
+                // var btn = document.getElementById("followerbtn");
+                // var span = $('#FollowerModal span.close')[0];                
+                // btn.onclick = function(){
+                //     modal.style.display = "block";
+                // }
+                // // span.onclick = function(){
+                // //     modal.style.display = "none";
+                // // }
+                // span.addEventListener('click', function(){
+                //     modal.style.display = 'none';
+                // })
+                // window.onclick = function(event){
+                //     if (event.target == modal) {
+                //         modal.style.display = "none";
+                //     }   
+                // }
+                
+            </script>
+        
         </apex:pageBlock>
 
         <apex:pageBlock title="MyTweet" id="mytweet_list">
@@ -28,7 +179,7 @@
                     <apex:outputLink value="./SNS_Tweet?id={!mt.id}"><apex:outputField value="{!mt.title__c}"/></apex:outputLink> 
                 </apex:column>
                 <apex:column value="{! mt.body__c}"/>
-                <apex:outputText value="{! mt.like_num__c}"/>
+                <apex:outputText value="{! mt.like_count__c}"/>
                 <apex:column value="{! mt.CreatedById}"/>
                 <apex:column value="{! mt.CreatedDate}"/>
             </apex:pageBlockTable>

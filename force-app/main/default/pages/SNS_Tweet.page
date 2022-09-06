@@ -60,7 +60,7 @@
                 <apex:outputText value="{! Tweet__c.CreatedDate }"/>
                 <apex:outputText value="{! Tweet__c.title__c }"/>
                 <apex:outputText value="{! Tweet__c.body__c }"/>
-                <apex:outputText value="{! Tweet__c.like_num__c}"/>
+                <apex:outputText value="{! Tweet__c.like_count__c}"/>
 
             </apex:pageBlockSection>
             
