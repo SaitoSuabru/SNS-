@@ -45,7 +45,7 @@
 
     <apex:form>
         <apex:pageBlock title = "Mypage" id = "users_list">
-            <apex:pageBlockButtons>
+            <apex:pageBlockButtons location="top">
                 <!-- ここにツールバーを入れる 追加だよ-->
                 <apex:commandButton value="Home" action="{!URLFOR($Page.SNS_Home)}" />
                 <apex:commandButton value="Mypage" action="{!URLFOR($Page.SNS_User)}?id={! $User.Id}"/>
@@ -58,11 +58,11 @@
 
             </apex:pageBlockSection>
 
-            <apex:pageBlockButtons rendered="{! owner_bool}">
+            <apex:pageBlockButtons rendered="{! owner_bool}" location="bottom">
                 <apex:commandButton action="{! follow }" value="Follow" rendered="{! follow_bool}"/>
                 <apex:commandButton action="{! follow }" value="UnFollow" rendered="{! NOT(follow_bool)}"/>                
             </apex:pageBlockButtons>
-            <apex:pageBlockButtons rendered="{! NOT(owner_bool)}">
+            <apex:pageBlockButtons rendered="{! NOT(owner_bool)}" location="bottom">
                 <apex:commandButton value="edit"/>
             </apex:pageBlockButtons>
 
@@ -85,6 +85,8 @@
                     </apex:pageBlock>
                 </div>
             </div>
+
+            
 
             <script>
                 // var modal = document.getElementById("FollowModal");

@@ -45,7 +45,7 @@
         
         <apex:pageBlock title = "Tweet" id = "users_list">
             
-            <apex:pageBlockButtons>
+            <apex:pageBlockButtons location="top">
                 <!-- ここにツールバーを入れる 追加だよ-->
                 <apex:commandButton value="Home" action="{!URLFOR($Page.SNS_Home)}" />
                 <apex:commandButton value="Mypage" action="{!URLFOR($Page.SNS_User)}?id={! $User.Id}"/>
@@ -64,7 +64,7 @@
 
             </apex:pageBlockSection>
             
-            <apex:pageBlockButtons>
+            <apex:pageBlockButtons location="bottom">
                     <apex:commandButton action="{! good }" reRender="PageBlockSection" value="Good"/>
             </apex:pageBlockButtons>
 

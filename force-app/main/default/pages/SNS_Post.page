@@ -1,13 +1,14 @@
 
 <apex:page StandardController="Tweet__c" extensions="TweetExtension">
     <apex:form>
-        <apex:pageBlock title = "Post Page" mode="edit">
-            <apex:pageBlockButtons>
-                <!-- ここにツールバーを入れる　-->
+
+    <apex:pageBlock>
+
+            <apex:pageBlockButtons location="top">
                 <apex:commandButton value="Home" action="{!URLFOR($Page.SNS_Home)}" />
                 <apex:commandButton value="Mypage" action="{!URLFOR($Page.SNS_User)}?id={! $User.Id}"/>
                 <apex:commandButton value="Newpost" action="{!URLFOR($Page.SNS_Post)}" />
-            </apex:pageBlockButtons>
+            </apex:pageBlockButtons> 
 
             <apex:pageBlockSection columns="1">    
             <apex:messages/><br/>
@@ -15,7 +16,7 @@
                 <apex:inputTextarea value="{! Tweet__c.body__c}" style="width:315px; height:70px;"/>
             </apex:pageBlockSection>
 
-            <apex:pageBlockButtons>
+            <apex:pageBlockButtons location="bottom">
                 <apex:commandButton action="{! save }" value="Post"/>
             </apex:pageBlockButtons>
             

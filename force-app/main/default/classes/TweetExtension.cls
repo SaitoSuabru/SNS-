@@ -34,6 +34,20 @@ public class TweetExtension {
         return results;
     }
 
+    public List<Tweet__c> getFollowTweets(){
+        List<Follows__c> follow_user =
+            [SELECT follower_id__c,Id FROM Follows__c WHERE CreatedById = :UserInfo.getUserId()];
+
+        Set<Id> userIds = new Set<Id>();
+        for(Follows__c f:follow_user) {
+            userIds.add(f.follower_id__c);
+        }
+        List<Tweet__c> follow_tweets =
+            [SELECT title__c, body__c, like_count__c, CreatedDate, CreatedById FROM Tweet__c WHERE CreatedById IN :userIds];
+
+        return follow_tweets;
+    }
+
     //フォローしているユーザーのツイートを取得（SNS_Homeで利用）
     // public List<Tweet__c> getFollowTweets(){
     //     List<Follows__c> follow_ids_list =
