@@ -37,6 +37,8 @@ public class FollowExtension {
         follower_num = follower_list.size();
     }
 
+    
+    //自分以外のユーザーをフォローする または フォローを外す（SNS_User）
     public PageReference follow(){
         String user_id = this.stdController.getRecord().Id;
         Id owner_id = UserInfo.getUserId();
@@ -62,15 +64,21 @@ public class FollowExtension {
     }
 
 
+    //自分のツイートを取得する（SNS_User）
     public List<Tweet__c> getMyTweets() {
         List<Tweet__c> results = Database.query(
-            'SELECT title__c, body__c, CreatedById, CreatedDate ' +
+            'SELECT title__c, body__c, CreatedById, CreatedDate, CreatedBy.Name ' +
             'FROM Tweet__c ' +
-            'WHERE CreatedById = \'' + this.stdController.getRecord().Id +'\''
+            'WHERE CreatedById = \'' + this.stdController.getRecord().Id +'\' ' +
+            'ORDER BY CreatedDate DESC ' +
+            'LIMIT 10'
+
         );
         return results;
     }
 
+
+    //自分がフォローしているユーザーを取得する（SNS_User）
     public List<Follows__c> GetFollowUser(){
         List<Follows__c> follow_list = 
             [SELECT id , follower_id__c,name FROM Follows__c WHERE CreatedById = :this.stdController.getRecord().Id];
@@ -78,6 +86,8 @@ public class FollowExtension {
             return follow_list;
     }
 
+
+    //自分のフォロワーを取得する（SNS_User）
     public List<Follows__c> GetFollowerUser(){
         List<Follows__c> follower_list = 
         [SELECT id , CreatedById FROM Follows__c WHERE follower_id__c = :this.stdController.getRecord().Id];

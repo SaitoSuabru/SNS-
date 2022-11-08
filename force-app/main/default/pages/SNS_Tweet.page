@@ -85,7 +85,10 @@
                 <apex:column>
                     <apex:outputLink value="./SNS_Tweet?id={!comment.id}"><apex:outputField value="{!comment.body__c}"/></apex:outputLink> 
                 </apex:column>
-                <apex:column value="{! comment.CreatedById}"/>
+                <apex:column>
+                    <!-- <apex:outputLink value="./SNS_User?id={! ft.CreatedById}"><apex:outputField value="{!ft.CreatedById}"/></apex:outputLink>  -->
+                    <apex:commandLink value="{!comment.CreatedBy.Name}" action="{!URLFOR($Page.SNS_User)}?id={! comment.CreatedById}" />
+                </apex:column>                
                 <apex:column value="{! comment.CreatedDate}"/>
             </apex:pageBlockTable>
         </apex:pageBlock>  

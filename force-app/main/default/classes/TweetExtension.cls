@@ -13,10 +13,10 @@ public class TweetExtension {
         this.acct =(Tweet__c)stdController.getRecord();
     }
 
-    // コメントをリストに格納
+    // 1つのツイートに対するコメントを取得（SNS_Tweet）
     public List<Tweet__c> getchildrenTweets() {
         List<Tweet__c> results = Database.query(
-            'SELECT Id, body__c, CreatedById, CreatedDate ' +
+            'SELECT Id, body__c, CreatedById, CreatedDate, CreatedBy.Name ' +
             'FROM Tweet__c ' +
             'WHERE commented_id__c = \'' + this.stdController.getRecord().Id +'\' '
             + 'ORDER BY CreatedDate ASC' 
@@ -24,16 +24,7 @@ public class TweetExtension {
         return results;
     }
 
-    // 自分のツイートを取得（SNS_Userで利用）
-    public List<Tweet__c> getMyTweets() {
-        List<Tweet__c> results = Database.query(
-            'SELECT title__c, body__c, CreatedById, CreatedDate, like_count__c ' +
-            'FROM Tweet__c ' +
-            'WHERE CreatedById = \'' + this.stdController.getRecord().Id +'\''
-        );
-        return results;
-    }
-
+    //自分がフォローしているユーザーのツイートを取得（SNS_Home)
     public List<Tweet__c> getFollowTweets(){
         List<Follows__c> follow_user =
             [SELECT follower_id__c,Id FROM Follows__c WHERE CreatedById = :UserInfo.getUserId()];
@@ -43,52 +34,31 @@ public class TweetExtension {
             userIds.add(f.follower_id__c);
         }
         List<Tweet__c> follow_tweets =
-            [SELECT title__c, body__c, like_count__c, CreatedDate, CreatedById FROM Tweet__c WHERE CreatedById IN :userIds];
+            [SELECT title__c, body__c, like_count__c, CreatedDate, CreatedById, CreatedBy.Name FROM Tweet__c WHERE CreatedById IN :userIds ORDER BY CreatedDate DESC];
 
         return follow_tweets;
     }
 
-    //フォローしているユーザーのツイートを取得（SNS_Homeで利用）
-    // public List<Tweet__c> getFollowTweets(){
-    //     List<Follows__c> follow_ids_list =
-    //         [SELECT follower_id__c FROM Follows__c WHERE CreatedById = :UserInfo.getUserId()];
-
-        // Set<String> follow_ids_set = new Set<String>(follow_ids_list);
-        // List<Tweet__c> follow_tweets =
-        //     [SELECT title__c FROM Tweet__c WHERE CreatedById IN :follow_ids_list];
-            
-
-        // Set<Follows__c> follow_ids = new Set<Follows__c>(follow_ids_list);
-
-        //ここのエラーから直す　全然できない
-
-        // Map <Id, follower_id__c> follow_ids_map = new Map<Id, Follows__c>([SELECT follower_id__c FROM Follows__c WHERE CreatedById = :UserInfo.getUserId()]);
-        
-        // List<Tweet__c> follow_tweets =
-        //     [SELECT title__c, body__c, CreatedById, CreatedDate, like_count__c FROM Tweet__c WHERE CreatedById IN :follow_ids_map.keySet()];
-        
-    //         return follow_tweets;
-    // }
-
 
     // ツイートの新規作成＆更新（SNS_Postで利用）
-    public void save(){
+    public PageReference save(){
         System.debug(this.stdController.getRecord());
 
         if(((Tweet__c) this.stdController.getRecord()).id != null){
             update this.stdController.getRecord();
-            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.INFO,'Successful update'));
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.INFO,'Successful update'));         
         }else{
             Tweet__c tweet = (Tweet__c) this.stdController.getRecord();
-            upsert tweet;
+            insert tweet;
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.INFO,'Successful create'));
 
        }
+       return page.SNS_Home;
 
     }
 
 
-    // ツイートに対するコメントをする（SNS_Tweetで利用）
+    // ツイートに対するコメントをする（SNS_Tweet）
     public void comment(){
         String tweet_id = this.stdController.getRecord().Id;
 
@@ -102,7 +72,7 @@ public class TweetExtension {
 
     }
 
-    // いいねボタンと連動してGoodレコードを作り、triggerに反応する場所
+    // いいねボタンと連動してGoodレコードを作り、triggerに反応する場所（SNS_Tweet）
     public PageReference good(){
         String tweet_id = this.stdController.getRecord().Id;
         Id owner_id = UserInfo.getUserId();
@@ -120,43 +90,13 @@ public class TweetExtension {
             delete good_dlt;
         }
 
-        
         PageReference tempPages = new PageReference('/apex/SNS_Tweet?id='+tweet_id);
         tempPages.setRedirect(true);
         return tempPages;
     }
 
-    // フォロー機能をTweetExtensionからFollowExtensionに移したためコメントアウト
-    // public PageReference follow(){
-    //     String user_id = this.stdController.getRecord().Id;
-    //     Id owner_id = UserInfo.getUserId();
-
-    //     List<Follows__c> result = 
-    //         [SELECT id FROM Follows__c WHERE follower_id__c = :user_id AND CreatedById = :owner_id];
-
-    //     if(result.isEmpty()){
-    //         Follows__c follow = new Follows__c(
-    //             follower_id__c = user_id
-    //         );
-    //         insert follow;
-    //     }else{
-    //         Follows__c[] follow_dlt = [SELECT id FROM Follows__c WHERE follower_id__c = :user_id AND CreatedById = :owner_id];
-    //         delete follow_dlt;
-    //     }
-
-    //     PageReference tempPages = new PageReference('/apex/SNS_User?id='+user_id);
-    //     tempPages.setRedirect(true);
-    //     return tempPages;
-    // }
-
-
-    // // いいね数を実際にプラスする関数
-    // public void good_cal(){ 
-    //     Decimal good_num = acct.like_num__c;
-    //     good_num += 1;
-    //     acct.like_num__c = good_num;
-    // }
-
+    
+    //
     public List<String> accessibleFields {
         get {
             if (accessibleFields == null) {

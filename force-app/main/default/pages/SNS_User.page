@@ -182,9 +182,15 @@
                 </apex:column>
                 <apex:column value="{! mt.body__c}"/>
                 <apex:outputText value="{! mt.like_count__c}"/>
-                <apex:column value="{! mt.CreatedById}"/>
+                <apex:column>
+                    <!-- <apex:outputLink value="./SNS_User?id={! ft.CreatedById}"><apex:outputField value="{!ft.CreatedById}"/></apex:outputLink>  -->
+                    <apex:commandLink value="{!mt.CreatedBy.Name}" action="{!URLFOR($Page.SNS_User)}?id={! mt.CreatedById}" />
+                </apex:column>               
                 <apex:column value="{! mt.CreatedDate}"/>
             </apex:pageBlockTable>
+            <!-- 
+                
+             -->
         </apex:pageBlock>   
 
     </apex:form>
