@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>commented_id__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>コメント先のツイートのID</description>
+    <externalId>false</externalId>
+    <label>コメント先ツイート</label>
+    <referenceTo>Tweet__c</referenceTo>
+    <relationshipLabel>Tweet</relationshipLabel>
+    <relationshipName>Comment</relationshipName>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

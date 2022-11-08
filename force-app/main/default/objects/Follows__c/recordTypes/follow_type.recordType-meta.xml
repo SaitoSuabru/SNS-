@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>follow_type</fullName>
+    <active>true</active>
+    <description>フォロー機能に用いるためのレコードタイプ</description>
+    <label>follow_type</label>
+</RecordType>
