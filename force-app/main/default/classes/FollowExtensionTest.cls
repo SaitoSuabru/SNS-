@@ -68,20 +68,24 @@ private class FollowExtensionTest{
 
 //getMyTweetsのテスト
     @isTest static void mytweetTest(){
-        Tweet__c testTweet = new Tweet__c();
-        insert testTweet;
+        Profile p = [SELECT Id FROM Profile WHERE Name='Standard User']; 
+        User test1 = new User(Alias = 'test1', Email='getFollowTweetsSNStest1@testorg.com', 
+        EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US', 
+        LocaleSidKey='en_US', ProfileId = UserInfo.getProfileId(), 
+        TimeZoneSidKey='America/Los_Angeles', UserName='SNStest1@testorg.com');
+        insert test1;
 
-        Id myId = UserInfo.getUserId();
+        System.runAs(test1){
+            Tweet__c testTweet = new Tweet__c();
+            insert testTweet;
 
-        List<Tweet__c> mytweet = Database.query(
-            'SELECT title__c, body__c, CreatedById, CreatedDate, CreatedBy.Name ' +
-            'FROM Tweet__c ' +
-            'WHERE CreatedById = \'' + myId +'\' ' +
-            'ORDER BY CreatedDate DESC ' +
-            'LIMIT 10'
-        );
+            ApexPages.StandardController sc = new ApexPages.StandardController(test1);
+            FollowExtension followEXtest = new FollowExtension(sc);
 
-        System.assertEquals(1, mytweet.size());
+            List<Tweet__c> mytweet = followEXtest.getMyTweets();
+            System.assertEquals(1, mytweet.size());
+        }
+        
     }
 
 //GetFollowUserのテスト
